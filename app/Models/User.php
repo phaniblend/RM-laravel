@@ -17,11 +17,14 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+   protected $fillable = [
+    'name',
+    'email',
+    'password',
+    'role',
+    'restaurant_id',
+    'phone',
+];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -42,4 +45,29 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function restaurant()
+{
+    return $this->belongsTo(Restaurant::class);
+}
+
+public function isOwner()
+{
+    return $this->role === 'owner';
+}
+
+public function isManager()
+{
+    return $this->role === 'manager';
+}
+
+public function isChef()
+{
+    return $this->role === 'chef';
+}
+
+public function isWaiter()
+{
+    return $this->role === 'waiter';
+}
 }
